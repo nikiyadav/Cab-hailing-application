@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: cab-service-deployment
+  labels:
+    app: cab-deployment
+spec:
+  selector:
+    matchLabels:
+      app: cab-deployment
+  template:
+    metadata:
+      labels:
+        app: cab-deployment
+    spec:
+      containers:
+      - name: cab-service-container
+        image: project-1_cab-service
+        imagePullPolicy: Never
+        ports:
+        - containerPort: 8080
+        volumeMounts:
+        - mountPath: /mnt/mount-point
+          name: mount-point
+      volumes:
+      - name: mount-point
+        hostPath: 
+          path: /home/project/mount-point
+          type: Directory

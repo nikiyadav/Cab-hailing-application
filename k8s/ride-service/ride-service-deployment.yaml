@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ride-service-deployment
+  labels:
+    app: ride-deployment
+spec:
+  selector:
+    matchLabels:
+      app: ride-deployment
+  template:
+    metadata:
+      labels:
+        app: ride-deployment
+    spec:
+      containers:
+      - name: ride-service-container
+        image: project-1_ride-service
+        imagePullPolicy: Never
+        resources:
+          limits:
+           cpu: "1000m"
+#          requests:
+#            cpu: "100m"
+        ports:
+        - containerPort: 8080
+        volumeMounts:
+        - mountPath: /mnt/mount-point
+          name: mount-point
+      volumes:
+      - name: mount-point
+        hostPath:
+          path: /home/project/mount-point
+          type: Directory
+

@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: wallet-service-deployment
+  labels:
+    app: wallet-deployment
+spec:
+  selector:
+    matchLabels:
+      app: wallet-deployment
+  template:
+    metadata:
+      labels:
+        app: wallet-deployment
+    spec:
+      containers:
+      - name: wallet-service-container
+        image: project-1_wallet-service
+        imagePullPolicy: Never
+        ports:
+        - containerPort: 8080
+        volumeMounts:
+        - mountPath: /mnt/mount-point
+          name: mount-point
+      volumes:
+      - name: mount-point
+        hostPath: 
+          path: /home/project/mount-point
+          type: Directory
